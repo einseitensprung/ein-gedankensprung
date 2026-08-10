@@ -43,7 +43,8 @@
     --muted: #6E6858;
     --line: #D9D4C4;
     --spark: #C97A2B;
-    --leap: #3F6659;
+    --violet: #6E4F91;
+    --violet-soft: #B79FD9;
     --ink: #14161B;
     --ink-text: #EFEAE0;
     --ink-muted: #B4AD99;
@@ -113,7 +114,7 @@
   }
   .wordmark em {
     font-style: normal;
-    color: var(--spark);
+    color: var(--violet);
   }
   .nav-links {
     display: flex;
@@ -163,7 +164,7 @@
     font-size: clamp(2.6rem, 7vw, 5.4rem);
     top: 0;
     left: 0;
-    color: var(--ink-text);
+    color: var(--violet-soft);
   }
   .leap-word.landing {
     font-size: clamp(2.6rem, 7vw, 5.4rem);
@@ -189,7 +190,7 @@
     animation: draw 1.8s 0.3s cubic-bezier(.65,0,.35,1) forwards;
   }
   .leap-svg .tick { stroke: var(--ink-muted); stroke-width: 1.5; opacity: 0.55; }
-  .leap-svg .takeoff-dot { fill: var(--ink-text); }
+  .leap-svg .takeoff-dot { fill: var(--violet-soft); }
   .leap-svg .landing-flag { stroke: var(--spark); stroke-width: 2; fill: none; }
   .leap-svg .landing-flag-fill { fill: var(--spark); }
 
@@ -270,7 +271,7 @@
   /* ---------- Sections (light) ---------- */
   section.light { padding: clamp(56px, 9vw, 110px) 0; }
   .section-head { margin-bottom: clamp(28px, 5vw, 48px); }
-  .section-head .eyebrow { color: var(--leap); margin-bottom: 10px; }
+  .section-head .eyebrow { color: var(--violet); margin-bottom: 10px; }
   h2 {
     font-family: 'Bricolage', sans-serif;
     font-weight: 700;
@@ -305,7 +306,7 @@
     height: 68px;
     border-radius: 50%;
     background: var(--ink);
-    color: var(--spark);
+    color: var(--violet-soft);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -346,7 +347,7 @@
     font-size: 0.65rem;
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    color: var(--leap);
+    color: var(--violet);
     margin: 0;
   }
   .spec-list dd { margin: 0; color: var(--text); }
@@ -365,7 +366,7 @@
     max-width: 34ch;
     margin: 28px 0 24px;
     padding-left: 22px;
-    border-left: 2px solid var(--spark);
+    border-left: 2px solid var(--violet);
     color: var(--text);
   }
   .tag-row {
@@ -403,11 +404,11 @@
     gap: 14px;
     transition: background 0.2s ease;
   }
-  .service-card:hover { background: color-mix(in srgb, var(--surface) 80%, var(--leap) 8%); }
+  .service-card:hover { background: color-mix(in srgb, var(--surface) 80%, var(--violet) 8%); }
   .service-icon {
     width: 30px;
     height: 30px;
-    color: var(--leap);
+    color: var(--violet);
   }
   .service-card h3 {
     font-family: 'Bricolage', sans-serif;
@@ -462,7 +463,7 @@
     font-size: 0.68rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--spark);
+    color: var(--violet-soft);
     margin: 0 0 8px;
   }
   .contact-item dd {

@@ -102,8 +102,10 @@
   }
   .nav-row {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
+    row-gap: 10px;
     padding: 16px clamp(20px, 4vw, 56px);
   }
   .wordmark {
@@ -112,6 +114,7 @@
     font-size: 1rem;
     letter-spacing: -0.01em;
     text-decoration: none;
+    white-space: nowrap;
   }
   .wordmark em {
     font-style: normal;
@@ -119,6 +122,7 @@
   }
   .nav-links {
     display: flex;
+    flex-wrap: wrap;
     gap: clamp(16px, 3vw, 32px);
     list-style: none;
     margin: 0;
@@ -131,6 +135,7 @@
     text-transform: uppercase;
     text-decoration: none;
     color: var(--muted);
+    white-space: nowrap;
     transition: color 0.2s ease;
   }
   .nav-links a:hover { color: var(--spark); }

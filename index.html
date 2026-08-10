@@ -105,6 +105,7 @@
     border-bottom: 1px solid var(--line);
   }
   .nav-row {
+    position: relative;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -143,6 +144,64 @@
     transition: color 0.2s ease;
   }
   .nav-links a:hover { color: var(--spark); }
+
+  .nav-toggle {
+    display: none;
+    flex: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    width: 36px;
+    height: 36px;
+    border: none;
+    background: transparent;
+    padding: 0;
+    cursor: pointer;
+  }
+  .nav-toggle-bar {
+    width: 20px;
+    height: 2px;
+    background: var(--text);
+    border-radius: 1px;
+    transition: transform 0.25s ease, opacity 0.2s ease;
+  }
+  .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(2) { opacity: 0; }
+  .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  @media (max-width: 640px) {
+    .nav-toggle { display: flex; }
+    .nav-links {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 2px;
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+      padding: 0 clamp(20px, 4vw, 56px);
+      background: var(--bg);
+      border-bottom: 1px solid var(--line);
+      transition: max-height 0.3s ease, opacity 0.25s ease, padding 0.3s ease;
+    }
+    .nav-links.is-open {
+      max-height: 260px;
+      opacity: 1;
+      padding: 8px clamp(20px, 4vw, 56px) 20px;
+    }
+    .nav-links li { width: 100%; }
+    .nav-links a {
+      display: block;
+      padding: 12px 0;
+      font-size: 0.78rem;
+      border-top: 1px solid var(--line);
+    }
+    .nav-links li:first-child a { border-top: none; }
+  }
 
   /* ---------- Ink bands (fixed dark, theme-independent) ---------- */
   .ink-band {
@@ -245,7 +304,14 @@
 
   /* ---------- Hero slider ---------- */
   .hero-slider { position: relative; }
-  .slides { display: grid; }
+  .slides {
+    display: grid;
+    touch-action: pan-y;
+    cursor: grab;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  .slides:active { cursor: grabbing; }
   .slide {
     grid-row: 1;
     grid-column: 1;
@@ -615,7 +681,6 @@
     .leap-stage { min-height: 300px; }
   }
   @media (max-width: 560px) {
-    .nav-links { gap: 14px; }
     .services-grid { grid-template-columns: 1fr; }
     .leap-word.take-off, .leap-word.landing { font-size: clamp(2.1rem, 11vw, 3rem); }
     .leap-stage { min-height: 340px; }
@@ -628,7 +693,12 @@
 <header class="site-nav">
   <div class="nav-row">
     <a href="#top" class="wordmark">ein <em>Gedanken</em>sprung</a>
-    <ul class="nav-links">
+    <button type="button" class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navLinks" aria-label="Menü öffnen">
+      <span class="nav-toggle-bar"></span>
+      <span class="nav-toggle-bar"></span>
+      <span class="nav-toggle-bar"></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
       <li><a href="#ueber">Über mich</a></li>
       <li><a href="#leistungen">Leistungen</a></li>
       <li><a href="#kontakt">Kontakt</a></li>
@@ -972,8 +1042,70 @@
     if (e.key === 'ArrowRight') { goTo(current + 1); stop(); start(); }
   });
 
+  var slidesEl = root.querySelector('.slides');
+  var dragging = false;
+  var dragStartX = 0;
+  var dragStartY = 0;
+  var dragDeltaX = 0;
+  var SWIPE_THRESHOLD = 40;
+
+  function onDragStart(e) {
+    if (e.pointerType === 'mouse' && e.button !== 0) return;
+    dragging = true;
+    dragStartX = e.clientX;
+    dragStartY = e.clientY;
+    dragDeltaX = 0;
+    stop();
+    if (slidesEl.setPointerCapture) slidesEl.setPointerCapture(e.pointerId);
+  }
+  function onDragMove(e) {
+    if (!dragging) return;
+    dragDeltaX = e.clientX - dragStartX;
+  }
+  function onDragEnd(e) {
+    if (!dragging) return;
+    dragging = false;
+    var deltaY = e.clientY - dragStartY;
+    if (Math.abs(dragDeltaX) > SWIPE_THRESHOLD && Math.abs(dragDeltaX) > Math.abs(deltaY)) {
+      goTo(dragDeltaX < 0 ? current + 1 : current - 1);
+    }
+    start();
+  }
+  slidesEl.addEventListener('pointerdown', onDragStart);
+  slidesEl.addEventListener('pointermove', onDragMove);
+  slidesEl.addEventListener('pointerup', onDragEnd);
+  slidesEl.addEventListener('pointercancel', onDragEnd);
+
   playArcDraw();
   start();
+})();
+
+(function () {
+  var toggle = document.getElementById('navToggle');
+  var links = document.getElementById('navLinks');
+  if (!toggle || !links) return;
+
+  function closeMenu() {
+    toggle.setAttribute('aria-expanded', 'false');
+    links.classList.remove('is-open');
+  }
+  function openMenu() {
+    toggle.setAttribute('aria-expanded', 'true');
+    links.classList.add('is-open');
+  }
+
+  toggle.addEventListener('click', function () {
+    if (toggle.getAttribute('aria-expanded') === 'true') closeMenu(); else openMenu();
+  });
+  links.addEventListener('click', function (e) {
+    if (e.target.tagName === 'A') closeMenu();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeMenu();
+  });
+  window.addEventListener('resize', function () {
+    if (window.innerWidth > 640) closeMenu();
+  });
 })();
 </script>
 </body>

@@ -764,7 +764,7 @@
     <div class="wrap">
       <div class="hero-slider" id="heroSlider" aria-roledescription="Karussell" aria-label="Leistungsversprechen">
         <div class="slides">
-          <article class="slide is-active">
+          <article class="slide is-active" id="slide-panel-0" role="tabpanel" aria-labelledby="slide-tab-0" tabindex="0">
             <p class="eyebrow">Projektbegleitung · Coaching · Websites</p>
             <div class="leap-stage">
               <svg class="leap-svg" viewBox="0 0 600 300" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
@@ -788,7 +788,7 @@
             <p class="hero-sub">Lisa Kuhn begleitet Ideen und Projekte von der ersten Überlegung bis zur erfolgreichen Umsetzung – als verlässliche Partnerin für Unterstützung und Inspiration.</p>
           </article>
 
-          <article class="slide">
+          <article class="slide" id="slide-panel-1" role="tabpanel" aria-labelledby="slide-tab-1" tabindex="0">
             <p class="eyebrow">Projektmanagement</p>
             <div class="leap-stage">
               <svg class="leap-svg" viewBox="0 0 600 300" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
@@ -812,7 +812,7 @@
             <p class="hero-sub">Strukturiertes Projektmanagement für Vorhaben jeder Größe – von der ersten Skizze bis zum erfolgreichen Abschluss.</p>
           </article>
 
-          <article class="slide">
+          <article class="slide" id="slide-panel-2" role="tabpanel" aria-labelledby="slide-tab-2" tabindex="0">
             <p class="eyebrow">Prozessanalyse &amp; KPI</p>
             <div class="leap-stage">
               <svg class="leap-svg" viewBox="0 0 600 300" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
@@ -836,7 +836,7 @@
             <p class="hero-sub">Abläufe durchleuchten, Reibung erkennen und Kennzahlen etablieren, die Erfolg tatsächlich sichtbar machen.</p>
           </article>
 
-          <article class="slide">
+          <article class="slide" id="slide-panel-3" role="tabpanel" aria-labelledby="slide-tab-3" tabindex="0">
             <p class="eyebrow">Change-Management &amp; Coaching</p>
             <div class="leap-stage">
               <svg class="leap-svg" viewBox="0 0 600 300" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
@@ -866,10 +866,10 @@
             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>
           </button>
           <div class="slider-dots" role="tablist" aria-label="Slides">
-            <button type="button" class="dot is-active" role="tab" aria-selected="true" aria-label="Gedankensprung"></button>
-            <button type="button" class="dot" role="tab" aria-selected="false" aria-label="Projektmanagement"></button>
-            <button type="button" class="dot" role="tab" aria-selected="false" aria-label="Prozessanalyse &amp; KPI"></button>
-            <button type="button" class="dot" role="tab" aria-selected="false" aria-label="Change-Management"></button>
+            <button type="button" class="dot is-active" role="tab" id="slide-tab-0" aria-controls="slide-panel-0" aria-selected="true" aria-label="Gedankensprung"></button>
+            <button type="button" class="dot" role="tab" id="slide-tab-1" aria-controls="slide-panel-1" aria-selected="false" aria-label="Projektmanagement"></button>
+            <button type="button" class="dot" role="tab" id="slide-tab-2" aria-controls="slide-panel-2" aria-selected="false" aria-label="Prozessanalyse &amp; KPI"></button>
+            <button type="button" class="dot" role="tab" id="slide-tab-3" aria-controls="slide-panel-3" aria-selected="false" aria-label="Change-Management"></button>
           </div>
           <button type="button" class="slider-arrow next" aria-label="Nächster Slide">
             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>

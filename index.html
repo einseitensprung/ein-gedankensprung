@@ -76,7 +76,7 @@
 
   * { box-sizing: border-box; }
   html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
-  section[id], main[id] { scroll-margin-top: 72px; }
+  div[id], main[id] { scroll-margin-top: 72px; }
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
   }
@@ -476,7 +476,7 @@
   .cred-strip span.sep { color: var(--spark); }
 
   /* ---------- Sections (light) ---------- */
-  section.light { padding: clamp(56px, 9vw, 110px) 0; }
+  .light { padding: clamp(56px, 9vw, 110px) 0; }
   .section-head { margin-bottom: clamp(28px, 5vw, 48px); }
   .section-head .eyebrow { color: var(--violet); margin-bottom: 10px; }
   h2 {
@@ -760,7 +760,7 @@
 
 <main id="top">
 
-  <section class="hero ink-band">
+  <div class="hero ink-band">
     <div class="wrap">
       <div class="hero-slider" id="heroSlider" aria-roledescription="Karussell" aria-label="Leistungsversprechen">
         <div class="slides">
@@ -894,9 +894,9 @@
         <span>20 JAHRE IT-CONSULTING &amp; GESCHÄFTSFÜHRUNG</span>
       </div>
     </div>
-  </section>
+  </div>
 
-  <section class="light" id="ueber">
+  <div class="light" id="ueber">
     <div class="wrap">
       <div class="section-head">
         <p class="eyebrow">Über mich</p>
@@ -929,9 +929,9 @@
         </div>
       </div>
     </div>
-  </section>
+  </div>
 
-  <section class="light" id="leistungen" style="padding-top:0;">
+  <div class="light" id="leistungen" style="padding-top:0;">
     <div class="wrap">
       <div class="section-head">
         <p class="eyebrow">Leistungen</p>
@@ -972,9 +972,9 @@
         </div>
       </div>
     </div>
-  </section>
+  </div>
 
-  <section class="closing ink-band" id="kontakt">
+  <div class="closing ink-band" id="kontakt">
     <svg class="closing-arc" viewBox="0 0 1200 300" preserveAspectRatio="none" aria-hidden="true">
       <path d="M0,110 C300,260 500,260 700,140 C900,20 1000,20 1200,90" />
     </svg>
@@ -1002,7 +1002,7 @@
         </div>
       </dl>
     </div>
-  </section>
+  </div>
 
 </main>
 

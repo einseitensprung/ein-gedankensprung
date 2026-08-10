@@ -182,23 +182,61 @@
   }
   .leap-svg path.trail {
     fill: none;
-    stroke: var(--ink-muted);
-    stroke-width: 2;
+    stroke: url(#leapGradient);
+    stroke-width: 2.5;
     stroke-linecap: round;
-    stroke-dasharray: 2 8;
+    stroke-dasharray: 0.1 9;
   }
   .slide.is-active .leap-svg path.trail {
-    stroke-dasharray: 620;
-    stroke-dashoffset: 620;
-    animation: draw 1.4s 0.15s cubic-bezier(.65,0,.35,1) forwards;
+    stroke-dasharray: 640;
+    stroke-dashoffset: 640;
+    animation: draw 1.5s 0.15s cubic-bezier(.65,0,.35,1) forwards;
   }
-  .leap-svg .tick { stroke: var(--ink-muted); stroke-width: 1.5; opacity: 0.55; }
-  .leap-svg .takeoff-dot { fill: var(--violet-soft); }
-  .leap-svg .landing-flag { stroke: var(--spark); stroke-width: 2; fill: none; }
-  .leap-svg .landing-flag-fill { fill: var(--spark); }
-
   @keyframes draw {
-    to { stroke-dasharray: 2 8; }
+    to { stroke-dasharray: 0.1 9; }
+  }
+
+  .leap-svg .takeoff-glow { fill: url(#sparkGlow); opacity: 0; }
+  .leap-svg .takeoff-spark {
+    fill: var(--violet-soft);
+    opacity: 0;
+    transform-box: fill-box;
+    transform-origin: center;
+    transform: scale(0.4);
+  }
+  .slide.is-active .leap-svg .takeoff-glow { animation: leap-fade-in 0.7s 0.1s ease forwards; }
+  .slide.is-active .leap-svg .takeoff-spark { animation: leap-spark-in 0.6s 0.1s cubic-bezier(.34,1.56,.64,1) forwards; }
+
+  .leap-svg .landing-glow { fill: url(#landingGlow); opacity: 0; }
+  .leap-svg .landing-ring {
+    fill: none;
+    stroke: var(--spark);
+    stroke-width: 1.5;
+    opacity: 0;
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+  .leap-svg .landing-dot {
+    fill: var(--spark);
+    opacity: 0;
+    transform-box: fill-box;
+    transform-origin: center;
+    transform: scale(0.3);
+  }
+  .slide.is-active .leap-svg .landing-glow { animation: leap-fade-in 0.8s 1.4s ease forwards; }
+  .slide.is-active .leap-svg .landing-dot { animation: leap-spark-in 0.5s 1.4s cubic-bezier(.34,1.56,.64,1) forwards; }
+  .slide.is-active .leap-svg .landing-ring { animation: leap-ring-pulse 1.3s 1.4s ease-out forwards; }
+
+  @keyframes leap-fade-in {
+    to { opacity: 1; }
+  }
+  @keyframes leap-spark-in {
+    to { opacity: 1; transform: scale(1); }
+  }
+  @keyframes leap-ring-pulse {
+    0% { opacity: 0.9; transform: scale(0.5); }
+    70% { opacity: 0.45; }
+    100% { opacity: 0; transform: scale(2.2); }
   }
 
   /* ---------- Hero slider ---------- */
@@ -503,7 +541,7 @@
     height: 100%;
     opacity: 0.14;
   }
-  .closing-arc path { fill: none; stroke: var(--spark); stroke-width: 2; stroke-dasharray: 2 9; stroke-linecap: round; }
+  .closing-arc path { fill: none; stroke: url(#leapGradient); stroke-width: 2.5; stroke-dasharray: 0.1 9; stroke-linecap: round; }
   .closing-inner { position: relative; z-index: 1; }
   .closing .eyebrow { color: var(--spark); margin-bottom: 16px; }
   .closing h2 {
@@ -558,7 +596,12 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .leap-svg path.trail { animation: none; stroke-dasharray: 2 8; }
+    .leap-svg path.trail { animation: none; stroke-dasharray: 0.1 9; }
+    .leap-svg .takeoff-glow,
+    .leap-svg .landing-glow { animation: none; opacity: 1; }
+    .leap-svg .takeoff-spark,
+    .leap-svg .landing-dot { animation: none; opacity: 1; transform: scale(1); }
+    .leap-svg .landing-ring { animation: none; opacity: 0.5; transform: scale(1); }
   }
 
   @media (max-width: 860px) {
@@ -586,6 +629,23 @@
   </div>
 </header>
 
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="leapGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:var(--violet-soft)" />
+      <stop offset="100%" style="stop-color:var(--spark)" />
+    </linearGradient>
+    <radialGradient id="sparkGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:var(--violet-soft);stop-opacity:0.55" />
+      <stop offset="100%" style="stop-color:var(--violet-soft);stop-opacity:0" />
+    </radialGradient>
+    <radialGradient id="landingGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:var(--spark);stop-opacity:0.5" />
+      <stop offset="100%" style="stop-color:var(--spark);stop-opacity:0" />
+    </radialGradient>
+  </defs>
+</svg>
+
 <main id="top">
 
   <section class="hero ink-band">
@@ -597,15 +657,14 @@
             <div class="leap-stage">
               <svg class="leap-svg" viewBox="0 0 600 300" preserveAspectRatio="none" aria-hidden="true">
                 <path class="trail" d="M46,190 C190,-10 420,-10 556,150" />
-                <line class="tick" x1="46" y1="205" x2="46" y2="220" />
-                <line class="tick" x1="160" y1="222" x2="160" y2="237" />
-                <line class="tick" x1="300" y1="228" x2="300" y2="243" />
-                <line class="tick" x1="440" y1="222" x2="440" y2="237" />
-                <line class="tick" x1="556" y1="205" x2="556" y2="220" />
-                <circle class="takeoff-dot" cx="46" cy="190" r="5" />
-                <g transform="translate(556,150)">
-                  <line class="landing-flag" x1="0" y1="0" x2="0" y2="-34" />
-                  <path class="landing-flag-fill" d="M0,-34 L26,-26 L0,-18 Z" />
+                <g class="takeoff-mark" transform="translate(46,190)">
+                  <circle class="takeoff-glow" r="26" />
+                  <path class="takeoff-spark" d="M0,-9 C1,-3 3,-1 9,0 C3,1 1,3 0,9 C-1,3 -3,1 -9,0 C-3,-1 -1,-3 0,-9 Z" />
+                </g>
+                <g class="landing-mark" transform="translate(556,150)">
+                  <circle class="landing-glow" r="30" />
+                  <circle class="landing-ring" r="13" />
+                  <circle class="landing-dot" r="3.5" />
                 </g>
               </svg>
               <p class="leap-word take-off">Gedanken</p>
@@ -620,15 +679,14 @@
             <div class="leap-stage">
               <svg class="leap-svg" viewBox="0 0 600 300" preserveAspectRatio="none" aria-hidden="true">
                 <path class="trail" d="M46,190 C190,-10 420,-10 556,150" />
-                <line class="tick" x1="46" y1="205" x2="46" y2="220" />
-                <line class="tick" x1="160" y1="222" x2="160" y2="237" />
-                <line class="tick" x1="300" y1="228" x2="300" y2="243" />
-                <line class="tick" x1="440" y1="222" x2="440" y2="237" />
-                <line class="tick" x1="556" y1="205" x2="556" y2="220" />
-                <circle class="takeoff-dot" cx="46" cy="190" r="5" />
-                <g transform="translate(556,150)">
-                  <line class="landing-flag" x1="0" y1="0" x2="0" y2="-34" />
-                  <path class="landing-flag-fill" d="M0,-34 L26,-26 L0,-18 Z" />
+                <g class="takeoff-mark" transform="translate(46,190)">
+                  <circle class="takeoff-glow" r="26" />
+                  <path class="takeoff-spark" d="M0,-9 C1,-3 3,-1 9,0 C3,1 1,3 0,9 C-1,3 -3,1 -9,0 C-3,-1 -1,-3 0,-9 Z" />
+                </g>
+                <g class="landing-mark" transform="translate(556,150)">
+                  <circle class="landing-glow" r="30" />
+                  <circle class="landing-ring" r="13" />
+                  <circle class="landing-dot" r="3.5" />
                 </g>
               </svg>
               <p class="leap-word take-off">Idee</p>
@@ -643,15 +701,14 @@
             <div class="leap-stage">
               <svg class="leap-svg" viewBox="0 0 600 300" preserveAspectRatio="none" aria-hidden="true">
                 <path class="trail" d="M46,190 C190,-10 420,-10 556,150" />
-                <line class="tick" x1="46" y1="205" x2="46" y2="220" />
-                <line class="tick" x1="160" y1="222" x2="160" y2="237" />
-                <line class="tick" x1="300" y1="228" x2="300" y2="243" />
-                <line class="tick" x1="440" y1="222" x2="440" y2="237" />
-                <line class="tick" x1="556" y1="205" x2="556" y2="220" />
-                <circle class="takeoff-dot" cx="46" cy="190" r="5" />
-                <g transform="translate(556,150)">
-                  <line class="landing-flag" x1="0" y1="0" x2="0" y2="-34" />
-                  <path class="landing-flag-fill" d="M0,-34 L26,-26 L0,-18 Z" />
+                <g class="takeoff-mark" transform="translate(46,190)">
+                  <circle class="takeoff-glow" r="26" />
+                  <path class="takeoff-spark" d="M0,-9 C1,-3 3,-1 9,0 C3,1 1,3 0,9 C-1,3 -3,1 -9,0 C-3,-1 -1,-3 0,-9 Z" />
+                </g>
+                <g class="landing-mark" transform="translate(556,150)">
+                  <circle class="landing-glow" r="30" />
+                  <circle class="landing-ring" r="13" />
+                  <circle class="landing-dot" r="3.5" />
                 </g>
               </svg>
               <p class="leap-word take-off">Chaos</p>
@@ -666,15 +723,14 @@
             <div class="leap-stage">
               <svg class="leap-svg" viewBox="0 0 600 300" preserveAspectRatio="none" aria-hidden="true">
                 <path class="trail" d="M46,190 C190,-10 420,-10 556,150" />
-                <line class="tick" x1="46" y1="205" x2="46" y2="220" />
-                <line class="tick" x1="160" y1="222" x2="160" y2="237" />
-                <line class="tick" x1="300" y1="228" x2="300" y2="243" />
-                <line class="tick" x1="440" y1="222" x2="440" y2="237" />
-                <line class="tick" x1="556" y1="205" x2="556" y2="220" />
-                <circle class="takeoff-dot" cx="46" cy="190" r="5" />
-                <g transform="translate(556,150)">
-                  <line class="landing-flag" x1="0" y1="0" x2="0" y2="-34" />
-                  <path class="landing-flag-fill" d="M0,-34 L26,-26 L0,-18 Z" />
+                <g class="takeoff-mark" transform="translate(46,190)">
+                  <circle class="takeoff-glow" r="26" />
+                  <path class="takeoff-spark" d="M0,-9 C1,-3 3,-1 9,0 C3,1 1,3 0,9 C-1,3 -3,1 -9,0 C-3,-1 -1,-3 0,-9 Z" />
+                </g>
+                <g class="landing-mark" transform="translate(556,150)">
+                  <circle class="landing-glow" r="30" />
+                  <circle class="landing-ring" r="13" />
+                  <circle class="landing-dot" r="3.5" />
                 </g>
               </svg>
               <p class="leap-word take-off">Wandel</p>
